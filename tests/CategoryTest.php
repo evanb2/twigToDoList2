@@ -107,6 +107,7 @@
            $name = "Wash the dog";
            $id = null;
            $name2 = "Home stuff";
+           $id2 = null;
            $test_Category = new Category($name, $id);
            $test_Category->save();
            $test_Category2 = new Category($name2, $id2);
@@ -132,7 +133,7 @@
            $test_Category = new Category($name, $id);
            $test_Category->save();
            $test_Category2 = new Category($name2, $id2);
-           $test_Category->save();
+           $test_Category2->save();
 
            //Act
            $result = Category::find($test_Category->getId());
