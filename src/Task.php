@@ -2,15 +2,27 @@
     class Task
     {
         private $description;
+        private $id;
 
-        function __construct($description)
+        function __construct($description, $id = null)
         {
             $this->description = $description;
+            $this->id = $id;
+        }
+
+        function setId($new_id)
+        {
+            $this->id = (int) $new_id;
         }
 
         function setDescription($new_description)
         {
             $this->description = (string) $new_description;
+        }
+
+        function getId()
+        {
+            return $this->id;
         }
 
         function getDescription()
@@ -20,7 +32,9 @@
 
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO tasks (description) VALUES ('{$this->getDescription()}');");
+            $statement = $GLOBALS['DB']->query("INSERT INTO tasks (description) VALUES ('{$this->getDescription()}') RETURNING id;");
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            $this->setId($result['id']);
         }
 
         static function getAll()
@@ -29,7 +43,8 @@
             $tasks = array();
             foreach($returned_tasks as $task) {
                 $description = $task['description'];
-                $new_task = new Task($description);
+                $id = $task['id'];
+                $new_task = new Task($description, $id);
                 array_push($tasks, $new_task);
             }
             return $tasks;
