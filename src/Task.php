@@ -36,7 +36,7 @@
             $statement = $GLOBALS['DB']->query("INSERT INTO tasks (description) VALUES ('{$this->getDescription()}') RETURNING id;");
             //use PDO fetch method to get id and put into assoc array
             $result = $statement->fetch(PDO::FETCH_ASSOC);
-            //setting result to setId
+            //setting setId to result
             $this->setId($result['id']);
         }
 
