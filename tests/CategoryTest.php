@@ -6,6 +6,7 @@
     */
 
     require_once "src/Category.php";
+    require_once "src/Task.php";
 
     $DB = new PDO('pgsql:host=localhost;dbname=to_do_test');
 
@@ -166,6 +167,6 @@
            //Assert
            $this->assertEquals([$test_Task, $test_Task2], $result);
        }
-       
+
     }
 ?>
