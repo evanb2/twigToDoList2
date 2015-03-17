@@ -3,11 +3,13 @@
     {
         private $description;
         private $id;
+        private $category_id;
         //setting a construct for Task class with arguments $description and $id
-        function __construct($description, $id = null)
+        function __construct($description, $id = null, $category_id)
         {
             $this->description = $description;
             $this->id = $id;
+            $this->category_id = $category_id;
         }
         //setting $new_id as an integer and equal to our $id
         function setId($new_id)
@@ -19,6 +21,12 @@
         {
             $this->description = (string) $new_description;
         }
+
+        function setCategoryId($new_category_id)
+        {
+            $this->category_id = (int) $new_category_id;
+        }
+
         //getter for returning $id
         function getId()
         {
@@ -30,10 +38,16 @@
             return $this->description;
         }
 
+        function getCategoryId()
+        {
+            return $this->category_id;
+        }
+
         function save()
         {
             //setting variable using GLOBALS to call tasks table and insert data and return id.
-            $statement = $GLOBALS['DB']->query("INSERT INTO tasks (description) VALUES ('{$this->getDescription()}') RETURNING id;");
+            $statement = $GLOBALS['DB']->query("INSERT INTO tasks (description, category_id) VALUES
+                ('{$this->getDescription()}', {$this->getCategoryId()}) RETURNING id;");
             //use PDO fetch method to get id and put into assoc array
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             //setting setId to result
@@ -53,7 +67,8 @@
                 $description = $task['description'];
                 $id = $task['id'];
                 //instantiate new Task with description and id from above in $new_task
-                $new_task = new Task($description, $id);
+                $category_id = $task['category_id'];
+                $new_task = new Task($description, $id, $category_id);
                 //push everything into tasks array
                 array_push($tasks, $new_task);
             }
