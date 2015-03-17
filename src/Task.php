@@ -2,8 +2,9 @@
     class Task
     {
         private $description;
-        private $id;
         private $category_id;
+        private $id;
+
         //setting a construct for Task class with arguments $description and $id
         function __construct($description, $id = null, $category_id)
         {

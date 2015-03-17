@@ -143,7 +143,7 @@
            $this->assertEquals($test_Category, $result);
        }
 
-       function testGetTasks()
+       function test_getTasks()
        {
            //Arrange
            $name = "Work stuff";

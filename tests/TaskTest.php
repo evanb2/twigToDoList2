@@ -19,6 +19,68 @@
             Task::deleteAll();
         }
 
+        function test_getId()
+        {
+             //Arrange
+             $name = "Home stuff";
+             $id = null;
+             $test_category = new Category($name, $id);
+             $test_category->save();
+
+             $description = "Wash the dog";
+             $category_id = $test_category->getId();
+             $test_Task = new Task($description, $id, $category_id);
+             $test_Task->save();
+
+             //Act
+             $result = $test_Task->getId();
+
+             // Assert
+             $this->assertEquals(true, is_numeric($result));
+
+         }
+
+         function test_getCategoryId()
+         {
+             //Arrange
+             $name = "Home stuff";
+             $id = null;
+             $test_category = new Category($name, $id);
+             $test_category->save();
+
+             $description = "Wash the dog";
+             $category_id = $test_category->getId();
+             $test_Task = new Task($description, $id, $category_id);
+             $test_Task->save();
+
+             //Act
+             $result = $test_Task->getCategoryId();
+
+             //Assert
+             $this->assertEquals(true, is_numeric($result));
+         }
+
+         function test_setId()
+         {
+             //Arrange
+             $name = "Home stuff";
+             $id = null;
+             $test_category = new Category($name, $id);
+             $test_category->save();
+
+             $description = "Wash the dog";
+             $category_id = $test_category->getId();
+             $test_Task = new Task($description, $id, $category_id);
+             $test_Task->save();
+
+             //Act
+             $test_Task->setId(2);
+
+             //Assert
+             $result = $test_Task->getId();
+             $this->assertEquals(2, $result);
+         }
+
         function test_save()
         {
             //Arrange
@@ -37,7 +99,7 @@
 
             //Assert
             $result = Task::getAll();
-            $this->assertEquals($test_Task, $result[0]);//why 0?? array ID key??
+            $this->assertEquals($test_Task, $result[0]);
         }
 
         function test_getAll()
@@ -92,69 +154,7 @@
 
       }
 
-      function test_getId()
-      {
-           //Arrange
-           $name = "Home stuff";
-           $id = null;
-           $test_category = new Category($name, $id);
-           $test_category->save();
-
-           $description = "Wash the dog";
-           $category_id = $test_category->getId();
-           $test_Task = new Task($description, $id, $category_id);
-           $test_Task->save();
-
-           //Act
-           $result = $test_Task->getId();
-
-           // Assert
-           $this->assertEquals(true, is_numeric($result));
-
-       }
-
-       function test_getCategoryId()
-       {
-           //Arrange
-           $name = "Home stuff";
-           $id = null;
-           $test_category = new Category($name, $id);
-           $test_category->save;
-
-           $description = "Wash the dog";
-           $category_id = $test_category->getId();
-           $test_Task = new Task($description, $id, $category_id);
-           $test_Task->save();
-
-           //Act
-           $result = $test_Task->getCategoryId();
-
-           //Assert
-           $this->assertEquals(true, is_numeric($result));
-       }
-
-       function test_setId()
-       {
-           //Arrange
-           $name = "Home stuff";
-           $id = null;
-           $test_category = new Category($name, $id);
-           $test_category->save();
-
-           $description = "Wash the dog";
-           $category_id = $test_category->getId();
-           $test_Task = new Task($description, $id, $category_id);
-           $test_Task->save();
-
-           //Act
-           $test_Task->setId(2);
-
-           //Assert
-           $result = $test_Task->getId();
-           $this->assertEquals(2, $result);
-       }
-
-       function test_Find()
+       function test_find()
        {
            //Arrange
            $name = "Home stuff";
