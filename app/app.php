@@ -4,8 +4,12 @@
     require_once __DIR__."/../src/Task.php";
     require_once __DIR__."/../src/Category.php";
 
+
+
     //setting variable for Silex Application
     $app = new Silex\Application();
+
+
 
     //connect to database
     $DB = new PDO('pgsql:host=localhost;dbname=to_do');
@@ -14,6 +18,11 @@
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'twig.path' => __DIR__.'/../views'
     ));
+
+    use Symfony\Component\HttpFoundation\Request;
+    Request::enableHttpMethodParameterOverride();
+
+    $app['debug']=TRUE;
 
     //get method for the index page
     $app->get("/", function() use ($app) {
@@ -36,6 +45,24 @@
       return $app['twig']->render('category.twig', array('category' => $category,
         'tasks' => $category->getTasks()));
     });
+
+    $app->get("/categories/{id}/edit", function($id) use ($app) {
+        $category = Category::find($id);
+        return $app['twig']->render('category_edit.html.twig', array('category' => $category));
+    });
+
+    $app->get("/categories/{id}/edit", function($id) use ($app) {
+        $category = Category::find($id);
+        return $app['twig']->render('category_edit.html.twig', array('category' => $category));
+    });
+
+    $app->patch("/categories/{id}", function($id) use ($app) {
+        $name = $_POST['name'];
+        $category = Category::find($id);
+        $category->update($name);
+        return $app['twig']->render('category.twig', array('category' => $category, 'tasks' => $category->getTasks()));
+    });
+
 
     //post method for categories page for 'name' from our form, getAll function for Category class
     $app->post("/categories", function() use ($app) {

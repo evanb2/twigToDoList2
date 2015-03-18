@@ -44,7 +44,7 @@
             return $tasks;
         }
 
-        function  setId($new_id)
+        function setId($new_id)
         {
             $this->id = (int) $new_id;
         }
@@ -55,6 +55,12 @@
                 VALUES ('{$this->getName()}') RETURNING id;");
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             $this->setId($result['id']);
+        }
+
+        function update($new_name)
+        {
+            $GLOBALS['DB']->exec("UPDATE categories SET name = '{$new_name}' WHERE id = {$this->getId()};");
+            $this->setName($new_name);
         }
 
         static function getAll()
